@@ -36,6 +36,7 @@ var {
   PushNotificationIOS,
   StyleSheet,
   Text,
+  TextInput,
   TouchableHighlight,
   View,
 } = ReactNative;
@@ -61,7 +62,7 @@ class Button extends React.Component {
 class Pusher extends React.Component {
   constructor(props){
       super(props);
-      this.state = {buttonText: 'Send Notification'};
+      this.state = {buttonText: 'Send Notification', pushToken: ''};
       this._scheduleNotification = this._scheduleNotification.bind(this);
   }
 
@@ -92,15 +93,19 @@ componentDidMount() {
 
     // (optional) Called when Token is generated (iOS and Android)
     onRegister: (token) => {
-        console.log( 'TOKEN:', token );
-        AlertIOS('TOKEN', token);
+        // console.log( 'TOKEN:', token );
+        // AlertIOS.alert('TOKEN', token);
+        this.setState({
+          pushToken: token.token
+        });
     },
 
     // (required) Called when a remote or local notification is opened or received
     onNotification: (notification) => {
       console.log( 'NOTIFICATION:', notification );
       this.setState({
-        buttonText: 'Notification Received'
+        buttonText: 'Notification Received',
+        pushToken: notification.message
       });
     },
 
@@ -123,22 +128,23 @@ componentDidMount() {
       * - Specified if permissions (ios) and token (android and ios) will requested or not,
       * - if not, you must call PushNotificationsHandler.requestPermissions() later
       */
-    requestPermissions: false,
+    requestPermissions: true,
 });
 }
 
   render() {
     return (
       <View style={styles.container}>
-        <Button
-          onPress={this._requestPermissions}
-          label="Request Permissions"
-        />
-        <Button
+        <Button style={styles.btn}
           onPress={this._scheduleNotification}
           label={this.state.buttonText}
         />
 
+        <TextInput
+          multiline={true}
+          style={styles.input}
+          value={this.state.pushToken}
+        />
       </View>
     );
   }
@@ -164,6 +170,19 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  btn: {
+    flex: 1,
+    marginTop: 100
+  },
+  input: {
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#000000',
+    height: 50,
+    // flex: 0.5,
+    // flexDirection: 'row',
+    marginBottom: 10
+  }
 });
 
 AppRegistry.registerComponent('Pusher', () => Pusher);

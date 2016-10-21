@@ -43,12 +43,6 @@
 
 // Required for the register event.
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-	UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle: @"deviceToken received"
-																										 message: @"This is the message."
-																										delegate: self
-																					 cancelButtonTitle: @"OK"
-																					 otherButtonTitles: nil];
-	[theAlert show];
 
 	[RCTPushNotificationManager didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
@@ -56,13 +50,6 @@
 // Required for the registrationError event.
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-	UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle: @"Register for Remote Failed"
-																										 message: error.description
-																										delegate: self
-																					 cancelButtonTitle: @"OK"
-																					 otherButtonTitles: nil];
-	[theAlert show];
-
 	[RCTPushNotificationManager didFailToRegisterForRemoteNotificationsWithError:error];
 }
 // Required for the notification event.
