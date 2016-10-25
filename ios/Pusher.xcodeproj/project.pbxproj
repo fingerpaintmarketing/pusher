@@ -21,6 +21,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		9719E8E41DC00AB400C6F008 /* AWSNotificationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9719E8E31DC00AB400C6F008 /* AWSNotificationHandler.m */; };
 		97E443551DB7DE3D00086EFD /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E443541DB7DE2900086EFD /* libRCTPushNotification.a */; };
 		DBE40A1A94F114F4EE0C3FF9 /* Pods_Pusher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02666BA960A62252D2B34571 /* Pods_Pusher.framework */; };
 /* End PBXBuildFile section */
@@ -128,6 +129,8 @@
 		37C74D9B33E7368522EE2DCB /* Pods-Pusher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pusher.release.xcconfig"; path = "Pods/Target Support Files/Pods-Pusher/Pods-Pusher.release.xcconfig"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		9719E8E21DC00AB400C6F008 /* AWSNotificationHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AWSNotificationHandler.h; path = Pusher/AWSNotificationHandler.h; sourceTree = "<group>"; };
+		9719E8E31DC00AB400C6F008 /* AWSNotificationHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AWSNotificationHandler.m; path = Pusher/AWSNotificationHandler.m; sourceTree = "<group>"; };
 		97A638B51DBA741E004ACA5D /* Pusher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Pusher.entitlements; path = Pusher/Pusher.entitlements; sourceTree = "<group>"; };
 		97E4434F1DB7DE2800086EFD /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		B0F0DE41678EBCB01E896AF9 /* Pods-Pusher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pusher.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Pusher/Pods-Pusher.debug.xcconfig"; sourceTree = "<group>"; };
@@ -240,6 +243,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				9719E8E21DC00AB400C6F008 /* AWSNotificationHandler.h */,
+				9719E8E31DC00AB400C6F008 /* AWSNotificationHandler.m */,
 			);
 			name = Pusher;
 			sourceTree = "<group>";
@@ -602,6 +607,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				9719E8E41DC00AB400C6F008 /* AWSNotificationHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
