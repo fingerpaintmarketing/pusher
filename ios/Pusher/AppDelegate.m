@@ -13,13 +13,17 @@
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
 
+#import <AWSCore/AWSCore.h>
+#import <AWSCognito/AWSCognito.h>
+#import <AWSSNS/AWSSNS.h>
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  NSURL *jsCodeLocation;
+	NSURL *jsCodeLocation;
 
-  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
+	jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"Pusher"
@@ -32,6 +36,7 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
   return YES;
 }
 
@@ -43,6 +48,7 @@
 
 // Required for the register event.
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+	[self setupAmazonCognito: deviceToken];
 
 	[RCTPushNotificationManager didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
@@ -62,4 +68,47 @@
 {
 	[RCTPushNotificationManager didReceiveLocalNotification:notification];
 }
+
+
+- (void)setupAmazonCognito:(NSData *)deviceToken {
+//	AWSCognitoCredentialsProvider *credentialsProviderz = [[AWSCognitoCredentialsProvider alloc] initWithRegionType: AWSRegionUSWest2
+//																																																	 identityPoolId: @"us-west-2:0e988109-ec27-472f-9c8b-1769fae1a804"
+//																																																		unauthRoleArn: @"arn:aws:iam::238295105550:role/Cognito_PusherUnauth_Role"
+//																																																			authRoleArn: @"arn:aws:iam::238295105550:role/Cognito_PusherAuth_Role"
+//																																													identityProviderManager: nil];
+//
+
+	AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType: AWSRegionUSWest2
+																																																	identityPoolId: @"us-west-2:0e988109-ec27-472f-9c8b-1769fae1a804"];
+
+	AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion: AWSRegionUSWest2
+																																			 credentialsProvider: credentialsProvider];
+
+	[AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
+
+	// Retrieve your Amazon Cognito ID
+	[[credentialsProvider getIdentityId] continueWithBlock:^id(AWSTask *task) {
+		if (task.error) {
+			NSLog(@"Error: %@", task.error);
+		}
+		else {
+			// the task result will contain the identity id
+			NSString *cognitoId = task.result;
+			NSLog(@"CognitoID: %@", cognitoId);
+		}
+		return nil;
+	}];
+
+	NSLog(@"deviceToken: %@", [self deviceTokenAsString: deviceToken]);
+}
+
+/* This method converts the device token received from APNS to a string that Amazon SNS Mobile Push can understand (takes out spaces) */
+-(NSString*)deviceTokenAsString:(NSData *)deviceTokenData {
+	NSString *rawDeviceTring = [NSString stringWithFormat: @"%@", deviceTokenData];
+	NSString *noSpaces = [rawDeviceTring stringByReplacingOccurrencesOfString: @" " withString: @""];
+	NSString *tmp1 = [noSpaces stringByReplacingOccurrencesOfString: @"<" withString: @""];
+
+	return [tmp1 stringByReplacingOccurrencesOfString: @">" withString: @""];
+}
+
 @end
